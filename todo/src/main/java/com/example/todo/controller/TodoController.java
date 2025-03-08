@@ -42,9 +42,9 @@ public class TodoController {
         return response;
     }
 
-    @DeleteMapping
-    public DeleteTodoResponse deleteTodo(@RequestBody DeleteTodoRequest requestDto) {
-        DeleteTodoResponse response = todoService.DeleteTodo(requestDto);
+    @DeleteMapping("/{id}")
+    public DeleteTodoResponse deleteTodo(@PathVariable Integer id) {
+        DeleteTodoResponse response = todoService.DeleteTodo(id);
 
         return response;
     }

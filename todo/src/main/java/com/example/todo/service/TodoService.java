@@ -65,9 +65,10 @@ public class TodoService {
 
     }
 
-    public DeleteTodoResponse DeleteTodo(DeleteTodoRequest requestDto) {
-        Todo todo = todoRepository.findById(requestDto.getId())
-                .orElseThrow(() -> new IllegalArgumentException("해당 ID의 Todo가 존재하지 않습니다. ID: " + requestDto.getId()));
+    @Transactional
+    public DeleteTodoResponse DeleteTodo(Integer id) {
+        Todo todo = todoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 ID의 Todo가 존재하지 않습니다. ID: " + id));
 
         todoRepository.delete(todo);
 
