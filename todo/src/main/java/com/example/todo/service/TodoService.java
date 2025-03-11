@@ -50,6 +50,19 @@ public class TodoService {
 
     }
 
+    public ToDoDto getTodo(Integer id){
+        Todo todo = todoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 ID의 Todo가 존재하지 않습니다. ID: " + id));
+
+        ToDoDto response = new ToDoDto();
+        response.setTitle(todo.getTitle());
+        response.setDone(todo.isDone());
+        response.setId(todo.getId());
+
+        return  response;
+
+    }
+
     @Transactional
     public UpdateTodoResponse UpdateTodo(UpdateTodoRequest requestDto) {
         Todo todo = todoRepository.findById(requestDto.getId())
