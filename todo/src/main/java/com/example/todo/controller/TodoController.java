@@ -45,6 +45,8 @@ public class TodoController {
         return response;
     }
 
+
+    // todo 수정
     @PatchMapping("/{id}")
     public UpdateTodoResponse updateTodo(@PathVariable Integer id, @RequestBody UpdateTodoRequest requestDto) {
         UpdateTodoResponse response = todoService.UpdateTodo(id, requestDto);
@@ -52,13 +54,13 @@ public class TodoController {
         return response;
     }
 
+    // todo done 변경
+    @PatchMapping("/{id}/done")
+    public UpdateDoneResponse updateDone(@PathVariable Integer id) {
+        UpdateDoneResponse response = todoService.UpdateDone(id);
 
-//    @PutMapping
-//    public UpdateTodoResponse updateTodo(@RequestBody UpdateTodoRequest requestDto) {
-//        UpdateTodoResponse response = todoService.UpdateTodo(requestDto);
-//
-//        return response;
-//    }
+        return response;
+    }
 
     // todo 삭제
     @DeleteMapping("/{id}")
