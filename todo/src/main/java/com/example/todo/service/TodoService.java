@@ -35,7 +35,7 @@ public class TodoService {
 
     public List<ToDoDto> getAllTodo() {
         List<Todo> todos = todoRepository.findAll();
-        
+
         List<ToDoDto> result = new ArrayList<>();
         for (Todo todo : todos) {
 
@@ -50,7 +50,7 @@ public class TodoService {
 
     }
 
-    public ToDoDto getTodo(Integer id){
+    public ToDoDto getTodo(Integer id) {
         Todo todo = todoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID의 Todo가 존재하지 않습니다. ID: " + id));
 
@@ -59,7 +59,7 @@ public class TodoService {
         response.setDone(todo.isDone());
         response.setId(todo.getId());
 
-        return  response;
+        return response;
 
     }
 
@@ -79,17 +79,12 @@ public class TodoService {
     }
 
     @Transactional
-    public DeleteTodoResponse DeleteTodo(Integer id) {
+    public void DeleteTodo(Integer id) {
         Todo todo = todoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID의 Todo가 존재하지 않습니다. ID: " + id));
 
         todoRepository.delete(todo);
 
-        DeleteTodoResponse response = new DeleteTodoResponse();
-        response.setId(todo.getId());
-        response.setMessage("삭제가 완료되었습니다.");
-
-        return response;
 
     }
 }
