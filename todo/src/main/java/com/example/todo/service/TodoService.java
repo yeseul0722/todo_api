@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -64,18 +63,21 @@ public class TodoService {
     }
 
     @Transactional
-    public UpdateTodoResponse UpdateTodo(UpdateTodoRequest requestDto) {
-        Todo todo = todoRepository.findById(requestDto.getId())
-                .orElseThrow(() -> new IllegalArgumentException("해당 ID의 Todo가 존재하지 않습니다." + requestDto.getId()));
+    public UpdateTodoResponse UpdateTodo(Integer id, UpdateTodoRequest requestDto) {
+        Todo todo = todoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 ID의 Todo가 존재하지 않습니다. ID: " + id));
 
-        todo.setTitle(requestDto.getTitle());
-        todo.setDone(requestDto.isDone());
+        if (requestDto.getTitle() != null) {
+            todo.setTitle(requestDto.getTitle());
+        }
 
         UpdateTodoResponse response = new UpdateTodoResponse();
+
         response.setTodoId(todo.getId());
+        response.setTitle(todo.getTitle());
+        response.setDone(todo.isDone());
 
         return response;
-
     }
 
     @Transactional

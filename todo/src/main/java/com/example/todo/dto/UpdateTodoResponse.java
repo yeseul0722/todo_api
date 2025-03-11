@@ -7,6 +7,6 @@ import lombok.Setter;
 @Setter
 public class UpdateTodoResponse {
     private int todoId;
-//    private String title;
-//    private boolean done;
+    private String title;
+    private boolean done;
 }
