@@ -30,7 +30,7 @@ public class TodoController {
 
         List<ToDoDto> toDoDtos = todoService.getAllTodo();
         //컨트롤러가 Service에게 모든 리스트를 가져오라고 요청한다.
-//        todoService.getAllTodo();
+
         ListResponse<ToDoDto> toDoDtoListResponse = new ListResponse<>();
         toDoDtoListResponse.setItems(toDoDtos);
 
@@ -48,8 +48,8 @@ public class TodoController {
 
     // todo 수정
     @PatchMapping("/{id}")
-    public UpdateTodoResponse updateTodo(@PathVariable Integer id, @RequestBody UpdateTodoRequest requestDto) {
-        UpdateTodoResponse response = todoService.UpdateTodo(id, requestDto);
+    public ToDoDto updateTodo(@PathVariable Integer id, @RequestBody UpdateTodoRequest requestDto) {
+        ToDoDto response = todoService.UpdateTodo(id, requestDto);
 
         return response;
     }
@@ -69,6 +69,15 @@ public class TodoController {
 
     }
 
+    @GetMapping("/search")
+    public ListResponse<ToDoDto> searchTodo(@RequestParam String keyword){
+        List<ToDoDto> toDoDtos = todoService.searchTodo(keyword);
+
+        ListResponse<ToDoDto> todoDtoListResponse = new ListResponse<>();
+        todoDtoListResponse.setItems(toDoDtos);
+
+        return todoDtoListResponse;
+    }
     // 필드 형식
     // 접근제어자 타입 필드명
 

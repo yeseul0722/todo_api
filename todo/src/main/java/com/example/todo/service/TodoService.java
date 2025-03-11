@@ -63,7 +63,7 @@ public class TodoService {
     }
 
     @Transactional
-    public UpdateTodoResponse UpdateTodo(Integer id, UpdateTodoRequest requestDto) {
+    public ToDoDto UpdateTodo(Integer id, UpdateTodoRequest requestDto) {
         Todo todo = todoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID의 Todo가 존재하지 않습니다. ID: " + id));
 
@@ -71,9 +71,9 @@ public class TodoService {
             todo.setTitle(requestDto.getTitle());
         }
 
-        UpdateTodoResponse response = new UpdateTodoResponse();
+        ToDoDto response = new ToDoDto();
 
-        response.setTodoId(todo.getId());
+        response.setId(todo.getId());
         response.setTitle(todo.getTitle());
         response.setDone(todo.isDone());
 
@@ -101,6 +101,20 @@ public class TodoService {
 
         todoRepository.delete(todo);
 
+    }
+
+    public List<ToDoDto> searchTodo(String keyword) {
+        List<Todo> todos = todoRepository.findByTitleContaining(keyword);
+
+        List<ToDoDto> result = new ArrayList<>();
+        for (Todo todo : todos) {
+            ToDoDto toDoDto = new ToDoDto();
+            toDoDto.setId(todo.getId());
+            toDoDto.setTitle(todo.getTitle());
+            toDoDto.setDone(todo.isDone());
+            result.add(toDoDto);
+        }
+        return result;
 
     }
 }
